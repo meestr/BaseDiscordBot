@@ -1,18 +1,10 @@
 from discord.ext import commands
 import discord
-from libs import macro
+from utils import macro
 
 
 class Cogs:
-    safe = [
-        'cogs.player',
-        'cogs.games',
-        'cogs.meme',
-        'cogs.nsfw',
-        'cogs.news',
-        'cogs.pokemon',
-        'cogs.animals'
-    ]
+    safe = []
 
 
 bot = commands.Bot(command_prefix='t!')
@@ -45,9 +37,6 @@ async def on_command_error(ctx, error):
     elif isinstance(error, AssertionError):
         await ctx.send(embed=await macro.error(f"{str(error).replace('AssertionError: ', '')}"))
 
-    elif isinstance(error, IndexError):
-        await ctx.send(embed=await macro.error("You need to create an account to use this command! \n Please use ``p!create`` to create an account."))
-
     elif isinstance(error, commands.DisabledCommand):
         await ctx.send(f'{ctx.command} has been disabled.')
 
@@ -62,7 +51,7 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     print(f"""READY\nUSER:{bot.user}\nminorities destroyed :sunglasses:""")
-    await bot.change_presence(activity=discord.Game(name='p!help || Use p!create to start an account!'), status=discord.Status.idle)
+    await bot.change_presence(activity=discord.Game(name=''), status=discord.Status.idle)
 
 
 bot.run('')
